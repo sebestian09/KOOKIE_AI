@@ -4,15 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KOOKIE - AI Assistant</title>
-    
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2? family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        /* ============================================
-           RESET & BASE STYLES
-           ============================================ */
-        
+        /* RESET */
         * {
             margin: 0;
             padding: 0;
@@ -27,107 +22,128 @@
             font-family: 'Inter', sans-serif;
             background: #0a0a0f;
             color: #ffffff;
-            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
-
-        /* ============================================
-           NAVIGATION
-           ============================================ */
-        
-        . navbar {
+        /* NAVBAR */
+        .navbar {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            z-index: 100;
-            padding: 20px 60px;
+            z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(10, 10, 15, 0.9);
+            padding: 20px 60px;
+            background: rgba(10, 10, 15, 0.85);
+            backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .navbar. scrolled {
+            padding: 14px 60px;
+            background: rgba(10, 10, 15, 0.95);
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 24px;
-            font-weight: 700;
-            color: #fff;
+            gap: 12px;
             text-decoration: none;
+            color: #ffffff;
+            font-size: 22px;
+            font-weight: 700;
         }
 
-        .logo-box {
-            width: 36px;
-            height: 36px;
+        .logo-icon {
+            width: 38px;
+            height: 38px;
             background: linear-gradient(135deg, #a855f7, #6366f1);
-            border-radius: 8px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
             font-weight: 700;
+            font-size: 16px;
         }
 
-        .nav-menu {
+        .nav-links {
             display: flex;
             align-items: center;
             gap: 40px;
         }
 
-        .nav-menu a {
-            color: #888;
+        .nav-links a {
+            color: #a1a1aa;
             text-decoration: none;
             font-size: 15px;
             font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
         }
 
-        .nav-menu a:hover {
-            color: #fff;
+        .nav-links a:hover {
+            color: #ffffff;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #a855f7, #6366f1);
+            transition: width 0.3s ease;
+        }
+
+        . nav-links a:hover::after {
+            width: 100%;
         }
 
         .nav-buttons {
             display: flex;
+            align-items: center;
             gap: 12px;
         }
 
-        . btn {
-            padding: 10px 20px;
-            border-radius: 8px;
+        .btn {
+            padding: 10px 22px;
+            border-radius: 10px;
             font-size: 14px;
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
+            transition: all 0.3s ease;
             text-decoration: none;
+            border: none;
             display: inline-block;
         }
 
-        .btn-outline {
+        .btn-ghost {
             background: transparent;
+            color: #ffffff;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #fff;
         }
 
-        .btn-outline:hover {
+        .btn-ghost:hover {
             background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
         }
 
-        .btn-primary {
+        . btn-primary {
             background: linear-gradient(135deg, #7c3aed, #6366f1);
-            border: none;
-            color: #fff;
+            color: #ffffff;
         }
 
-        . btn-primary:hover {
-            opacity: 0.9;
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.4);
         }
 
-
-        /* ============================================
-           HERO SECTION
-           ============================================ */
-        
+        /* HERO SECTION */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -135,12 +151,10 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 120px 20px 80px;
+            padding: 140px 20px 100px;
             position: relative;
-            overflow: hidden;
         }
 
-        /* Background glow effect */
         .hero-glow {
             position: absolute;
             top: 50%;
@@ -148,100 +162,130 @@
             transform: translate(-50%, -50%);
             width: 800px;
             height: 800px;
-            background: radial-gradient(circle, rgba(124, 58, 237, 0.12) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.15) 0%, transparent 70%);
             pointer-events: none;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.7; transform: translate(-50%, -50%) scale(1. 05); }
         }
 
         .hero-content {
             position: relative;
             z-index: 1;
+            max-width: 800px;
         }
 
-        /* Small badge above title */
-        .badge {
+        .animate-fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 0.8s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0. 4s; }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        . badge {
             display: inline-block;
-            padding: 8px 20px;
+            padding: 10px 24px;
             background: rgba(124, 58, 237, 0.15);
-            border: 1px solid rgba(124, 58, 237, 0.3);
+            border: 1px solid rgba(124, 58, 237, 0. 3);
             border-radius: 50px;
             font-size: 14px;
             font-weight: 500;
             color: #c4b5fd;
-            margin-bottom: 30px;
+            margin-bottom: 32px;
         }
 
-        . hero-title {
-            font-size: 72px;
+        .hero-title {
+            font-size: 68px;
             font-weight: 800;
-            line-height: 1. 1;
+            line-height: 1.1;
             margin-bottom: 24px;
+            letter-spacing: -2px;
         }
 
-        /* Gradient text for accent word */
-        .text-gradient {
+        .gradient-text {
             background: linear-gradient(135deg, #a855f7, #22d3ee);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .hero-description {
+        .hero-text {
             font-size: 18px;
-            color: #888;
-            max-width: 600px;
-            margin: 0 auto 40px;
-            line-height: 1.7;
+            color: #a1a1aa;
+            line-height: 1.8;
+            margin-bottom: 40px;
+            max-width: 580px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .hero-buttons {
+        . hero-buttons {
             display: flex;
             gap: 16px;
             justify-content: center;
             flex-wrap: wrap;
         }
 
-        .btn-large {
+        . btn-large {
             padding: 16px 32px;
-            border-radius: 12px;
             font-size: 16px;
-            font-weight: 600;
+            border-radius: 12px;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
-        .btn-secondary {
+        .btn-large svg {
+            transition: transform 0.3s ease;
+        }
+
+        .btn-large:hover svg {
+            transform: translateX(4px);
+        }
+
+        . btn-secondary {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #fff;
+            color: #ffffff;
         }
 
         .btn-secondary:hover {
             background: rgba(255, 255, 255, 0.1);
         }
 
-        /* Scroll down arrow */
-        .scroll-arrow {
+        .scroll-indicator {
             position: absolute;
             bottom: 40px;
             left: 50%;
             transform: translateX(-50%);
-            color: #555;
-            animation: bounce 2s infinite;
+            color: #52525b;
+            animation: bounce 2s ease-in-out infinite;
+            cursor: pointer;
         }
 
         @keyframes bounce {
             0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(10px); }
+            50% { transform: translateX(-50%) translateY(12px); }
         }
 
-
-        /* ============================================
-           STATS SECTION
-           ============================================ */
-        
-        .stats {
+        /* STATS SECTION */
+        . stats {
             padding: 100px 60px;
+            position: relative;
         }
 
         .section-header {
@@ -249,44 +293,62 @@
             margin-bottom: 60px;
         }
 
-        .section-label {
-            display: block;
-            font-size: 12px;
+        .section-tag {
+            font-size: 13px;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             color: #a855f7;
             margin-bottom: 16px;
+            display: block;
         }
 
-        . section-title {
+        .section-title {
             font-size: 42px;
             font-weight: 700;
         }
 
+        .section-desc {
+            color: #a1a1aa;
+            font-size: 18px;
+            max-width: 600px;
+            margin: 16px auto 0;
+            line-height: 1.7;
+        }
+
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 28px;
             max-width: 1100px;
             margin: 0 auto;
         }
 
         .stat-card {
             background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 24px;
+            padding: 44px 32px;
             text-align: center;
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .stat-card.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .stat-card:hover {
-            border-color: rgba(124, 58, 237, 0.3);
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(124, 58, 237, 0.4);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.15);
         }
 
         .stat-number {
-            font-size: 48px;
+            font-size: 56px;
             font-weight: 800;
             background: linear-gradient(135deg, #a855f7, #6366f1);
             -webkit-background-clip: text;
@@ -298,54 +360,65 @@
         . stat-label {
             font-size: 18px;
             font-weight: 600;
-            color: #fff;
             margin-bottom: 8px;
         }
 
-        . stat-description {
+        .stat-desc {
             font-size: 14px;
-            color: #666;
+            color: #71717a;
         }
 
-
-        /* ============================================
-           FEATURES SECTION
-           ============================================ */
-        
-        .features {
+        /* FEATURES SECTION */
+        . features {
             padding: 100px 60px;
-            background: linear-gradient(180deg, transparent, rgba(124, 58, 237, 0.02));
+            background: linear-gradient(180deg, transparent, rgba(124, 58, 237, 0.03));
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 28px;
             max-width: 1100px;
             margin: 0 auto;
         }
 
         .feature-card {
             background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            padding: 32px;
+            border: 1px solid rgba(255, 255, 255, 0. 05);
+            border-radius: 24px;
+            padding: 36px;
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        . feature-card.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .feature-card:hover {
-            border-color: rgba(124, 58, 237, 0.2);
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(124, 58, 237, 0.3);
+            transform: translateY(-6px);
         }
 
         .feature-icon {
-            width: 50px;
-            height: 50px;
+            width: 56px;
+            height: 56px;
             background: rgba(124, 58, 237, 0.15);
-            border-radius: 12px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
             color: #a855f7;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            background: rgba(124, 58, 237, 0. 25);
+            transform: scale(1.1);
         }
 
         .feature-title {
@@ -354,19 +427,165 @@
             margin-bottom: 12px;
         }
 
-        .feature-description {
+        .feature-desc {
             font-size: 15px;
-            color: #888;
-            line-height: 1.6;
+            color: #a1a1aa;
+            line-height: 1.7;
         }
 
+        /* ABOUT SECTION */
+        .about {
+            padding: 100px 60px;
+            position: relative;
+        }
 
-        /* ============================================
-           CTA SECTION
-           ============================================ */
-        
+        .about-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-content {
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: all 0.6s ease;
+        }
+
+        .about-content.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .about-title {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+
+        .about-text {
+            font-size: 16px;
+            color: #a1a1aa;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        . about-highlight {
+            color: #a855f7;
+            font-weight: 600;
+        }
+
+        .about-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 32px;
+        }
+
+        . skill-tag {
+            padding: 8px 16px;
+            background: rgba(124, 58, 237, 0.15);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #c4b5fd;
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            background: rgba(124, 58, 237, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .about-image {
+            position: relative;
+            opacity: 0;
+            transform: translateX(40px);
+            transition: all 0.6s ease;
+        }
+
+        .about-image.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .about-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .about-card:hover {
+            border-color: rgba(124, 58, 237, 0. 3);
+        }
+
+        .profile-icon {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #a855f7, #6366f1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            font-size: 48px;
+            font-weight: 700;
+        }
+
+        .about-name {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .about-role {
+            font-size: 16px;
+            color: #a855f7;
+            margin-bottom: 20px;
+        }
+
+        . about-bio {
+            font-size: 14px;
+            color: #71717a;
+            line-height: 1.7;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .social-link {
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #a1a1aa;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: rgba(124, 58, 237, 0.2);
+            border-color: rgba(124, 58, 237, 0.4);
+            color: #ffffff;
+            transform: translateY(-4px);
+        }
+
+        /* CTA SECTION */
         .cta {
-            padding: 120px 60px;
+            padding: 140px 60px;
             text-align: center;
             position: relative;
         }
@@ -376,36 +595,43 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(124, 58, 237, 0.08) 0%, transparent 70%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.12) 0%, transparent 70%);
             pointer-events: none;
         }
 
         .cta-content {
             position: relative;
             z-index: 1;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.6s ease;
+        }
+
+        .cta-content.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .cta-title {
-            font-size: 48px;
+            font-size: 52px;
             font-weight: 800;
             margin-bottom: 20px;
         }
 
-        .cta-description {
+        .cta-text {
             font-size: 18px;
-            color: #888;
+            color: #a1a1aa;
+            margin-bottom: 40px;
             max-width: 500px;
-            margin: 0 auto 40px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
         }
 
-
-        /* ============================================
-           FOOTER
-           ============================================ */
-        
-        . footer {
+        /* FOOTER */
+        .footer {
             padding: 40px 60px;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
             display: flex;
@@ -415,108 +641,91 @@
             gap: 20px;
         }
 
-        .footer-logo {
+        . footer-logo {
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 700;
         }
 
-        .footer-links {
+        .footer-logo . logo-icon {
+            width: 30px;
+            height: 30px;
+            font-size: 13px;
+        }
+
+        . footer-links {
             display: flex;
-            gap: 30px;
+            gap: 32px;
         }
 
         . footer-links a {
-            color: #666;
+            color: #71717a;
             text-decoration: none;
             font-size: 14px;
+            transition: color 0.3s ease;
         }
 
         .footer-links a:hover {
-            color: #fff;
+            color: #ffffff;
         }
 
         .footer-copy {
-            color: #444;
+            color: #52525b;
             font-size: 14px;
         }
 
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .about-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
 
-        /* ============================================
-           ANIMATIONS
-           ============================================ */
-        
-        /* Fade in animation for elements */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
+            .about-content {
+                text-align: center;
+            }
 
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-
-        /* ============================================
-           RESPONSIVE DESIGN
-           ============================================ */
-        
-        @media (max-width: 1024px) {
-            .stats-grid,
-            .features-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .about-skills {
+                justify-content: center;
             }
         }
 
         @media (max-width: 768px) {
-            /* Navigation */
             .navbar {
-                padding: 15px 20px;
+                padding: 16px 20px;
             }
 
-            . nav-menu {
+            . nav-links {
                 display: none;
             }
 
-            /* Hero */
             .hero {
-                padding: 100px 20px 60px;
+                padding: 120px 20px 80px;
             }
 
             . hero-title {
-                font-size: 40px;
+                font-size: 42px;
             }
 
-            . hero-description {
+            . hero-text {
                 font-size: 16px;
             }
 
-            /* Sections */
-            .stats,
-            .features,
-            .cta {
-                padding: 60px 20px;
+            .stats, .features, .about, .cta {
+                padding: 80px 20px;
             }
 
-            .section-title {
+            .section-title, .about-title {
                 font-size: 32px;
             }
 
-            . stats-grid,
-            .features-grid {
-                grid-template-columns: 1fr;
+            . cta-title {
+                font-size: 36px;
             }
 
-            .cta-title {
-                font-size: 32px;
-            }
-
-            /* Footer */
-            .footer {
+            . footer {
                 padding: 30px 20px;
                 flex-direction: column;
                 text-align: center;
@@ -531,52 +740,36 @@
 </head>
 <body>
 
-    <!-- ==========================================
-         NAVIGATION BAR
-         ========================================== -->
-    <nav class="navbar">
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
         <a href="#" class="logo">
-            <div class="logo-box">K</div>
+            <div class="logo-icon">K</div>
             KOOKIE
         </a>
-
-        <div class="nav-menu">
+        <div class="nav-links">
             <a href="#features">Features</a>
             <a href="#stats">Stats</a>
             <a href="#about">About</a>
         </div>
-
         <div class="nav-buttons">
-            <a href="#" class="btn btn-outline">Sign In</a>
+            <a href="#" class="btn btn-ghost">Sign In</a>
             <a href="https://kookieai-rocvfcqhmpthf74c5ikdw3.streamlit.app" class="btn btn-primary">Get Started</a>
         </div>
     </nav>
 
-
-    <!-- ==========================================
-         HERO SECTION
-         ========================================== -->
+    <!-- HERO SECTION -->
     <section class="hero">
-        <!-- Background glow -->
         <div class="hero-glow"></div>
-
         <div class="hero-content">
-            <!-- Badge -->
-            <span class="badge">Intelligent Conversations Powered by AI</span>
-
-            <!-- Main heading -->
-            <h1 class="hero-title">
-                Think.  Ask. <span class="text-gradient">Discover.</span>
+            <span class="badge animate-fade-up delay-1">Intelligent Conversations Powered by AI</span>
+            <h1 class="hero-title animate-fade-up delay-2">
+                Think. Ask. <span class="gradient-text">Discover.</span>
             </h1>
-
-            <!-- Description -->
-            <p class="hero-description">
+            <p class="hero-text animate-fade-up delay-3">
                 KOOKIE leverages artificial intelligence to provide instant answers, 
                 creative ideas, and intelligent assistance - fast, easy, and completely free.
             </p>
-
-            <!-- Buttons -->
-            <div class="hero-buttons">
+            <div class="hero-buttons animate-fade-up delay-4">
                 <a href="https://kookieai-rocvfcqhmpthf74c5ikdw3. streamlit.app" class="btn btn-primary btn-large">
                     Start Now with AI
                     <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -591,154 +784,174 @@
                 </a>
             </div>
         </div>
-
-        <!-- Scroll indicator -->
-        <div class="scroll-arrow">
+        <a href="#stats" class="scroll-indicator">
             <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
             </svg>
-        </div>
+        </a>
     </section>
 
-
-    <!-- ==========================================
-         STATS SECTION
-         ========================================== -->
+    <!-- STATS SECTION -->
     <section class="stats" id="stats">
         <div class="section-header">
-            <span class="section-label">Trusted by Users Worldwide</span>
+            <span class="section-tag">Trusted Worldwide</span>
             <h2 class="section-title">Empowering Conversations Everywhere</h2>
+            <p class="section-desc">Join thousands of users who trust KOOKIE for their daily AI assistance needs.</p>
         </div>
-
         <div class="stats-grid">
-            <!-- Stat 1 -->
-            <div class="stat-card fade-in">
+            <div class="stat-card">
                 <div class="stat-number">10K+</div>
                 <div class="stat-label">Questions Answered</div>
-                <p class="stat-description">Intelligent responses generated by our AI</p>
+                <p class="stat-desc">Intelligent responses generated by our AI</p>
             </div>
-
-            <!-- Stat 2 -->
-            <div class="stat-card fade-in">
+            <div class="stat-card">
                 <div class="stat-number">5K+</div>
                 <div class="stat-label">Active Users</div>
-                <p class="stat-description">People trust KOOKIE daily</p>
+                <p class="stat-desc">People trust KOOKIE daily</p>
             </div>
-
-            <!-- Stat 3 -->
-            <div class="stat-card fade-in">
+            <div class="stat-card">
                 <div class="stat-number">99%</div>
                 <div class="stat-label">Satisfaction Rate</div>
-                <p class="stat-description">Users love our fast responses</p>
+                <p class="stat-desc">Users love our fast responses</p>
             </div>
         </div>
     </section>
 
-
-    <!-- ==========================================
-         FEATURES SECTION
-         ========================================== -->
+    <!-- FEATURES SECTION -->
     <section class="features" id="features">
         <div class="section-header">
-            <span class="section-label">What We Offer</span>
+            <span class="section-tag">What We Offer</span>
             <h2 class="section-title">Why Choose KOOKIE</h2>
+            <p class="section-desc">Experience the next generation of AI assistance with powerful features designed for you.</p>
         </div>
-
         <div class="features-grid">
-            <!-- Feature 1 -->
-            <div class="feature-card fade-in">
+            <div class="feature-card">
                 <div class="feature-icon">
-                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                     </svg>
                 </div>
                 <h3 class="feature-title">Lightning Fast</h3>
-                <p class="feature-description">
-                    Get instant responses to your questions.  No waiting, no delays - just immediate intelligent answers.
-                </p>
+                <p class="feature-desc">Get instant responses to your questions.  No waiting, no delays - just immediate intelligent answers.</p>
             </div>
-
-            <!-- Feature 2 -->
-            <div class="feature-card fade-in">
+            <div class="feature-card">
                 <div class="feature-icon">
-                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9. 663 17h4.673M12 3v1m6. 364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3. 374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-. 895-.356-1.754-. 988-2.386l-.548-.547z"/>
                     </svg>
                 </div>
                 <h3 class="feature-title">Smart Context</h3>
-                <p class="feature-description">
-                    KOOKIE remembers your conversation context, providing more relevant and personalized responses.
-                </p>
+                <p class="feature-desc">KOOKIE remembers your conversation context, providing more relevant and personalized responses.</p>
             </div>
-
-            <!-- Feature 3 -->
-            <div class="feature-card fade-in">
+            <div class="feature-card">
                 <div class="feature-icon">
-                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
                     </svg>
                 </div>
                 <h3 class="feature-title">Private and Secure</h3>
-                <p class="feature-description">
-                    Your conversations are private.  We prioritize your security and never store personal data.
-                </p>
+                <p class="feature-desc">Your conversations are private.  We prioritize your security and never store personal data.</p>
             </div>
-
-            <!-- Feature 4 -->
-            <div class="feature-card fade-in">
+            <div class="feature-card">
                 <div class="feature-icon">
-                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-. 1-9. 999 5. 002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/>
+                    <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-. 1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/>
                     </svg>
                 </div>
                 <h3 class="feature-title">Always Available</h3>
-                <p class="feature-description">
-                    Access KOOKIE anytime, anywhere.  Our AI assistant is available 24/7, ready to help you.
-                </p>
+                <p class="feature-desc">Access KOOKIE anytime, anywhere.  Our AI assistant is available 24/7, ready to help you.</p>
             </div>
-
-            <!-- Feature 5 -->
-            <div class="feature-card fade-in">
+            <div class="feature-card">
                 <div class="feature-icon">
-                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4. 318 6.318a4. 5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
                     </svg>
                 </div>
                 <h3 class="feature-title">Completely Free</h3>
-                <p class="feature-description">
-                    No subscriptions, no hidden fees.  KOOKIE is 100% free to use with unlimited conversations.
-                </p>
+                <p class="feature-desc">No subscriptions, no hidden fees.  KOOKIE is 100% free to use with unlimited conversations.</p>
             </div>
-
-            <!-- Feature 6 -->
-            <div class="feature-card fade-in">
+            <div class="feature-card">
                 <div class="feature-icon">
-                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/>
                     </svg>
                 </div>
                 <h3 class="feature-title">Natural Conversations</h3>
-                <p class="feature-description">
-                    Chat naturally like you would with a friend.  KOOKIE understands context and nuance.
-                </p>
+                <p class="feature-desc">Chat naturally like you would with a friend.  KOOKIE understands context and nuance.</p>
             </div>
         </div>
     </section>
 
+    <!-- ABOUT SECTION -->
+    <section class="about" id="about">
+        <div class="about-container">
+            <div class="about-content">
+                <span class="section-tag">About The Creator</span>
+                <h2 class="about-title">Built by a Cyber Security Student</h2>
+                <p class="about-text">
+                    KOOKIE was created with a passion for <span class="about-highlight">artificial intelligence</span> 
+                    and a vision to make AI accessible to everyone. As a cyber security student, I understand the 
+                    importance of <span class="about-highlight">privacy and security</span> in digital tools.
+                </p>
+                <p class="about-text">
+                    This project combines my knowledge in <span class="about-highlight">secure coding practices</span> 
+                    with modern AI technology to deliver a safe, fast, and intelligent assistant that anyone can use 
+                    without worrying about their data.
+                </p>
+                <p class="about-text">
+                    My goal is to continue improving KOOKIE with new features while maintaining the highest 
+                    standards of security and user experience. 
+                </p>
+                <div class="about-skills">
+                    <span class="skill-tag">Cyber Security</span>
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">AI / ML</span>
+                    <span class="skill-tag">Web Development</span>
+                    <span class="skill-tag">Ethical Hacking</span>
+                    <span class="skill-tag">Network Security</span>
+                </div>
+            </div>
+            <div class="about-image">
+                <div class="about-card">
+                    <div class="profile-icon">S</div>
+                    <h3 class="about-name">Sebestian</h3>
+                    <p class="about-role">Cyber Security Student</p>
+                    <p class="about-bio">
+                        Passionate about building secure and intelligent applications. 
+                        Currently studying cyber security while exploring the world of 
+                        artificial intelligence and machine learning.
+                    </p>
+                    <div class="social-links">
+                        <a href="https://github.com/sebestian09" target="_blank" class="social-link">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387. 599.111.793-.261. 793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-. 546-1.387-1. 333-1.756-1. 333-1.756-1. 089-.745.083-.729. 083-.729 1.205. 084 1.839 1. 237 1.839 1. 237 1.07 1. 834 2.807 1. 304 3.492.997. 107-.775.418-1. 305.762-1.604-2.665-.305-5. 467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694. 801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6. 627-5.373-12-12-12z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19 0h-14c-2. 761 0-5 2. 239-5 5v14c0 2.761 2. 239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M23. 953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-. 951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-. 616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-. 39 0-.779-.023-1.17-.067a13. 995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <!-- ==========================================
-         CALL TO ACTION SECTION
-         ========================================== -->
-    <section class="cta" id="about">
-        <!-- Background glow -->
+    <!-- CTA SECTION -->
+    <section class="cta">
         <div class="cta-glow"></div>
-
         <div class="cta-content">
             <h2 class="cta-title">Ready to Start? </h2>
-            <p class="cta-description">
+            <p class="cta-text">
                 Join thousands of users who are already experiencing the power of AI-assisted conversations.
             </p>
-            <a href="https://kookieai-rocvfcqhmpthf74c5ikdw3. streamlit.app" class="btn btn-primary btn-large">
+            <a href="https://kookieai-rocvfcqhmpthf74c5ikdw3.streamlit.app" class="btn btn-primary btn-large">
                 Try KOOKIE Now
                 <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
@@ -747,71 +960,60 @@
         </div>
     </section>
 
-
-    <!-- ==========================================
-         FOOTER
-         ========================================== -->
+    <!-- FOOTER -->
     <footer class="footer">
         <div class="footer-logo">
-            <div class="logo-box" style="width: 28px; height: 28px; font-size: 14px;">K</div>
+            <div class="logo-icon">K</div>
             KOOKIE
         </div>
-
         <div class="footer-links">
             <a href="#features">Features</a>
             <a href="#stats">Stats</a>
             <a href="#about">About</a>
             <a href="https://github.com/sebestian09/KOOKIE_AI" target="_blank">GitHub</a>
         </div>
-
         <p class="footer-copy">2025 KOOKIE AI. All rights reserved.</p>
     </footer>
 
-
-    <!-- ==========================================
-         JAVASCRIPT
-         ========================================== -->
+    <!-- JAVASCRIPT FOR ANIMATIONS -->
     <script>
-      
-        // SCROLL ANIMATION
-        // Shows elements when they come into view
-    
+        // Navbar scroll effect
+        var navbar = document.getElementById('navbar');
         
+        window.addEventListener('scroll', function() {
+            if (window. scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll animation for cards and sections
         function handleScrollAnimation() {
-            var elements = document.querySelectorAll('. fade-in');
+            var elements = document.querySelectorAll('. stat-card, .feature-card, .about-content, .about-image, .cta-content');
             
-            elements.forEach(function(element) {
+            elements.forEach(function(element, index) {
                 var position = element.getBoundingClientRect().top;
                 var screenHeight = window.innerHeight;
                 
-                // If element is in viewport
                 if (position < screenHeight - 100) {
-                    element.classList.add('visible');
+                    setTimeout(function() {
+                        element.classList.add('visible');
+                    }, index * 100);
                 }
             });
         }
 
-        // Run on scroll
         window.addEventListener('scroll', handleScrollAnimation);
-
-        // Run on page load
         window.addEventListener('load', handleScrollAnimation);
 
-        
-        // SMOOTH SCROLL FOR NAVIGATION LINKS
-    
-        
-        var navLinks = document.querySelectorAll('a[href^="#"]');
-
-        navLinks.forEach(function(link) {
-            link.addEventListener('click', function(e) {
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+            anchor. addEventListener('click', function(e) {
                 e.preventDefault();
-                
-                var targetId = this.getAttribute('href');
-                var targetElement = document. querySelector(targetId);
-                
-                if (targetElement) {
-                    targetElement.scrollIntoView({
+                var target = document.querySelector(this. getAttribute('href'));
+                if (target) {
+                    target. scrollIntoView({
                         behavior: 'smooth',
                         block: 'start'
                     });
